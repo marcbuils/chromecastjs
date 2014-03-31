@@ -19,6 +19,8 @@ Marc Buils from Marc Buils Consultant Compagny (France)
 
 JavaScript project based on ChromeCast API to build ChromeCast apps very easy
 
+AMD and CommonJS compatible
+
 Here all the requirements you need before to build the output files or to launch the dev mode:
 
 - [NodeJS](http://nodejs.org/download/)
@@ -29,9 +31,14 @@ Here all the requirements you need before to build the output files or to launch
 
 ## Getting Started
 
-A Chromecast app is composed by 
+A Chromecast app is composed by
 - Sender application to start your application from a device (on Google Chrome with ChromeCast plugin)
 - Receiver application open on chromecast
+
+### Install
+
+- Bower
+> bower install --save-dev chromecastjs
 
 ### Sender example
 ```html

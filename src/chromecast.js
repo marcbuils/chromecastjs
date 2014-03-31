@@ -1,4 +1,14 @@
-define([], function () {
+(function (root, factory) {
+    'use strict';
+    
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else {
+        root.chromecast = factory();
+    }
+}(this, function () {
+    'use strict';
+    
     var utils, Common, Sender = {}, Receiver = {};
     
     utils = {
@@ -9,7 +19,8 @@ define([], function () {
         },
 
         extend: function (target) {
-            var i, attr, origin;
+            var attr = {};
+            var i, origin;
             
             for (i = 1; i < arguments.length; i++) {
                 origin = arguments[i];
@@ -41,31 +52,31 @@ define([], function () {
             this._events[event].push(callback);
             
             return this;
-      },
+        },
       
-      options: function (opt) {
-          if (!this._options) {
-              this._options = {};
-          }
-          if (arguments.length > 0) {
-              utils.extend(this._options, opt);
-          }
-          return this._options;
-      },
+        options: function (opt) {
+            if (!this._options) {
+                this._options = {};
+            }
+            if (arguments.length > 0) {
+                utils.extend(this._options, opt);
+            }
+            return this._options;
+        },
       
-      _trigger: function (eventName, data) {
-          var i, events, event;
+        _trigger: function (eventName, data) {
+            var i, events, event;
           
-          if (!this._events || !this._events[eventName]) {
-              return;
-          }
+            if (!this._events || !this._events[eventName]) {
+                return;
+            }
           
-          events = this._events[eventName];
-          for (i = 0; i < events.length; i++) {
-              event = events[i];
-              event.call(this, data);
-          }
-      }
+            events = this._events[eventName];
+            for (i = 0; i < events.length; i++) {
+                event = events[i];
+                event.call(this, data);
+            }
+        }
     };
     
     utils.extend(Sender, Common, {
@@ -87,20 +98,20 @@ define([], function () {
             if (this._session !== null) {
                 this._session.sendMessage(options.namespace, message, utils.bind(this._success(message, this)), utils.bind(this._error, this));
             } else {
-              chrome.cast.requestSession(utils.bind(function(e) {
-                  this._session = e;
-                  this._session.addUpdateListener(utils.bind(sessionUpdateListener, this));
-                  this._session.addMessageListener(options.namespace, utils.bind(this._receiverMessage, this));
-                  this._session.sendMessage(
-                      options.namespace, 
-                      options.message, 
-                      utils.bind(this._success(message, this)),
-                      utils.bind(this._error, this));
-              }, this), utils.bind(this._error, this));
+                chrome.cast.requestSession(utils.bind(function (e) {
+                    this._session = e;
+                    this._session.addUpdateListener(utils.bind(this._sessionUpdateListener, this));
+                    this._session.addMessageListener(options.namespace, utils.bind(this._receiverMessage, this));
+                    this._session.sendMessage(
+                        options.namespace,
+                        options.message,
+                        utils.bind(this._success(message, this)),
+                        utils.bind(this._error, this));
+                }, this), utils.bind(this._error, this));
             }
             
             return this;
-          },
+        },
 
         _initializeCast: function () {
             var options = this.options();
@@ -113,7 +124,7 @@ define([], function () {
 
             sessionRequest = new chrome.cast.SessionRequest(options.applicationID);
             apiConfig = new chrome.cast.ApiConfig(
-                sessionRequest, 
+                sessionRequest,
                 utils.bind(this._sessionListener, this),
                 utils.bind(this._receiverListener, this));
             chrome.cast.initialize(apiConfig, utils.bind(this._initSuccess, this), utils.bind(this._error, this));
@@ -126,17 +137,17 @@ define([], function () {
         },
         
         _sessionListener: function (event) {
-          var options = this.options();
+            var options = this.options();
             
-          this._trigger('session', event);
-          this._session = event;
-          this._session.addUpdateListener(utils.bind(this._sessionUpdateListener, this));  
-          this._session.addMessageListener(options.namespace, utils.bind(this._receiverMessage, this));
+            this._trigger('session', event);
+            this._session = event;
+            this._session.addUpdateListener(utils.bind(this._sessionUpdateListener, this));
+            this._session.addMessageListener(options.namespace, utils.bind(this._receiverMessage, this));
         },
         
 
         _initSuccess: function () {
-          this._trigger('initsuccess');
+            this._trigger('initsuccess');
         },
 
         _error: function (message) {
@@ -168,9 +179,9 @@ define([], function () {
         },
 
         _stopApp: function () {
-          this._session.stop(
-              utils.bind(this._stopAppSuccess, this), 
-              utils.bind(this._error, this));
+            this._session.stop(
+                utils.bind(this._stopAppSuccess, this),
+                utils.bind(this._error, this));
         }
     });
     
@@ -194,11 +205,6 @@ define([], function () {
             return this;
         },
         
-        sendMessage: function () {
-            this._messageBus.send(event.senderId, event.data);
-            return this;
-        },
-        
         setApplicationState: function (state) {
             this._castReceiverManager.setApplicationState(state);
             return this;
@@ -207,7 +213,7 @@ define([], function () {
         _initializeCast: function () {
             var options = this.options();
             var castReceiverManager, messageBus;
-            
+
             cast.receiver.logger.setLevelValue(0);
             castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
             castReceiverManager.onReady = utils.bind(this._ready, this);
@@ -243,6 +249,7 @@ define([], function () {
         
         _message: function (event) {
             this._trigger('message', event);
+            this._messageBus.send(event.senderId, event.data);
         }
     });
 
@@ -254,4 +261,4 @@ define([], function () {
             return utils.create(Receiver).initialize(options);
         }
     };
-});
+}));

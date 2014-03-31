@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cast Hello Text</title>
+    <style type="text/css">
+      body {
+        overflow:hidden;
+      }
+      div{
+        height:720PX;
+        width:1280PX;
+        text-align:center;
+        border:0px solid silver;
+        display: table-cell;
+        vertical-align:middle;
+        color:#FFFFFF;
+        background-color:#000000;
+        font-weight:bold;
+        font-family:Verdana, Geneva, sans-serif;
+        font-size:40px;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="message">Talk to me</div>
+    <script type="text/javascript" src="../chromecast.js"></script>
+    <script type="text/javascript">
+      var chromecastReceiver = null;
+    
+      window.onload = function() {
+          chromecastReceiver = chromecast.createReceiver({
+            namespace: 'urn:x-cast:com.google.cast.sample.helloworld'
+          });
+          
+          chromecastReceiver
+              .on('message', function (text) {
+                 document.getElementById('message').innerHTML=text;
+                 this.setApplicationState(text);
+              });
+      };
+    </script>
+  </body>
+</html>

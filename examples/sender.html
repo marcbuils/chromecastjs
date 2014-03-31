@@ -2,6 +2,33 @@
 <html>
 <head>
 <title>Hello World</title>
+<style type="text/css">
+html, body, #wrapper {
+   height:100%;
+   width: 100%;
+   margin: 0;
+   padding: 0;
+   border: 0;
+}
+#wrapper td {
+   vertical-align: middle;
+   text-align: center;
+}
+input {
+  font-family: "Arial", Arial, sans-serif;
+  font-size: 40px;
+  font-weight: bold;    
+}
+.border {
+    border: 2px solid #cccccc;
+    border-radius: 5px;
+}
+.border:focus { 
+    outline: none;
+    border-color: #8ecaed;
+    box-shadow: 0 0 5px #8ecaed;
+}
+</style>
 </head>
 <body>
   <table id="wrapper">
@@ -14,11 +41,15 @@
     </tr>
   </table>  
 
-<script type="text/javascript" src="../src/chromecast.js"></script>
+<script type="text/javascript" src="../chromecast.js"></script>
 <script type="text/javascript">
   var chromecastSender = chromecast.createSender({
     applicationID: 'XXXXXXXX',
     namespace: 'urn:x-cast:com.google.cast.sample.helloworld'
+  });
+  
+  chromecastSender.on('error', function (err) {
+      console.error(err);
   });
 
   function update() {
