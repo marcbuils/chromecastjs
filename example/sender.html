@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello World</title>
+</head>
+<body>
+  <table id="wrapper">
+    <tr>
+        <td>
+            <form method="get" action="JavaScript:update();">
+                <input id="input" class="border" type="text" size="30" onwebkitspeechchange="transcribe(this.value)" x-webkit-speech/>
+            </form>
+        </td>
+    </tr>
+  </table>  
+
+<script type="text/javascript" src="../src/chromecast.js"></script>
+<script type="text/javascript">
+  var chromecastSender = chromecast.createSender({
+    applicationID: 'XXXXXXXX',
+    namespace: 'urn:x-cast:com.google.cast.sample.helloworld'
+  });
+
+  function update() {
+    chromecastSender.sendMessage(document.getElementById('input').value);
+  }
+
+  function transcribe(words) {
+    chromecastSender.sendMessage(words);
+  }
+  
+  document.getElementById('input').focus();
+</script>
+</body>
+</html>
