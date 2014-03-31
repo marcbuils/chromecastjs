@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Chromecastjs by marcbuils</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Chromecastjs</h1>
+        <h2>JavaScript project based on ChromeCast API to build ChromeCast apps very easy</h2>
+        <a href="https://github.com/marcbuils/chromecastjs" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="chromecastjs" class="anchor" href="#chromecastjs"><span class="octicon octicon-link"></span></a>chromecastjs</h1>
+
+<h2>
+<a name="current-version" class="anchor" href="#current-version"><span class="octicon octicon-link"></span></a>Current version</h2>
+
+<p>v0.1.0</p>
+
+<h2>
+<a name="licence" class="anchor" href="#licence"><span class="octicon octicon-link"></span></a>Licence</h2>
+
+<p>MIT</p>
+
+<h2>
+<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<p>Marc Buils from Marc Buils Consultant Compagny (France)</p>
+
+<p>(and sorry for my english. I work it, but currently it is very bad...)</p>
+
+<h2>
+<a name="description" class="anchor" href="#description"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>JavaScript project based on ChromeCast API to build ChromeCast apps very easy</p>
+
+<p>AMD and CommonJS compatible</p>
+
+<p>Here all the requirements you need before to build the output files or to launch the dev mode:</p>
+
+<ul>
+<li><a href="http://nodejs.org/download/">NodeJS</a></li>
+<li>
+<a href="http://gruntjs.com/">Grunt</a> <code>npm install -g grunt-cli</code>
+</li>
+<li>
+<a href="http://phantomjs.org/download.html">PhantomJS</a> <code>npm install -g phantomjs</code>
+</li>
+<li>
+<a href="http://bower.io/">Bower</a> <code>npm install -g bower</code>
+</li>
+</ul><h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p>A Chromecast app is composed by</p>
+
+<ul>
+<li>Sender application to start your application from a device (on Google Chrome with ChromeCast plugin)</li>
+<li>Receiver application open on chromecast</li>
+</ul><h3>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h3>
+
+<ul>
+<li>Bower
+&gt; bower install --save-dev chromecastjs</li>
+</ul><h3>
+<a name="sender-example" class="anchor" href="#sender-example"><span class="octicon octicon-link"></span></a>Sender example</h3>
+
+<div class="highlight highlight-html"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>Hello World<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"wrapper"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tr&gt;</span>
+        <span class="nt">&lt;td&gt;</span>
+            <span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"get"</span> <span class="na">action=</span><span class="s">"JavaScript:update();"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"input"</span> <span class="na">class=</span><span class="s">"border"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">size=</span><span class="s">"30"</span> <span class="na">onwebkitspeechchange=</span><span class="s">"transcribe(this.value)"</span> <span class="na">x-webkit-speech</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/form&gt;</span>
+        <span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/table&gt;</span>  
+
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"//www.gstatic.com/cv/js/sender/v1/cast_sender.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+  <span class="kd">var</span> <span class="nx">chromecastSender</span> <span class="o">=</span> <span class="nx">chromecast</span><span class="p">.</span><span class="nx">createSender</span><span class="p">({</span>
+    <span class="nx">applicationID</span><span class="o">:</span> <span class="s1">'XXXXXXXX'</span><span class="p">,</span>
+    <span class="nx">namespace</span><span class="o">:</span> <span class="s1">'urn:x-cast:com.google.cast.sample.helloworld'</span>
+  <span class="p">});</span>
+
+  <span class="kd">function</span> <span class="nx">update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">chromecastSender</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'input'</span><span class="p">).</span><span class="nx">value</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">transcribe</span><span class="p">(</span><span class="nx">words</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">chromecastSender</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">words</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'input'</span><span class="p">).</span><span class="nx">focus</span><span class="p">();</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+<h3>
+<a name="receiver-example" class="anchor" href="#receiver-example"><span class="octicon octicon-link"></span></a>Receiver example</h3>
+
+<div class="highlight highlight-html"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Cast Hello Text<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"message"</span><span class="nt">&gt;</span>Talk to me<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+      <span class="kd">var</span> <span class="nx">chromecastReceiver</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+      <span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+          <span class="nx">chromecastReceiver</span> <span class="o">=</span> <span class="nx">chromecast</span><span class="p">.</span><span class="nx">createReceiver</span><span class="p">({</span>
+            <span class="nx">namespace</span><span class="o">:</span> <span class="s1">'urn:x-cast:com.google.cast.sample.helloworld'</span>
+          <span class="p">});</span>
+
+          <span class="nx">chromecastReceiver</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+             <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
+             <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'message'</span><span class="p">).</span><span class="nx">innerHTML</span><span class="o">=</span><span class="nx">text</span><span class="p">;</span>
+             <span class="k">this</span><span class="p">.</span><span class="nx">setApplicationState</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
+          <span class="p">});</span>
+      <span class="p">};</span>
+    <span class="nt">&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<blockquote>
+<p>chromecast.createSender({options})</p>
+</blockquote>
+
+<p>Create a chromecastjs sender instance</p>
+
+<blockquote>
+<p>chromecast.createReceiver({options})</p>
+</blockquote>
+
+<p>Create a chromecastjs receiver instance</p>
+
+<h3>
+<a name="sender" class="anchor" href="#sender"><span class="octicon octicon-link"></span></a>Sender</h3>
+
+<p><em>WARNING: no message can be sent during the first second after initialize</em></p>
+
+<h4>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h4>
+
+<blockquote>
+<p>on({event name}, {callback})</p>
+</blockquote>
+
+<p>Register an event (see Getting Started / Sender / API / Events)</p>
+
+<blockquote>
+<p>sendMessage({message})</p>
+</blockquote>
+
+<p>Send a message to the receiver app</p>
+
+<h4>
+<a name="events" class="anchor" href="#events"><span class="octicon octicon-link"></span></a>Events</h4>
+
+<blockquote>
+<p>message
+session
+initSuccess
+error
+success
+stopappsuccess
+sessionupdatelistener
+listener</p>
+</blockquote>
+
+<h3>
+<a name="receiver" class="anchor" href="#receiver"><span class="octicon octicon-link"></span></a>Receiver</h3>
+
+<h4>
+<a name="api-1" class="anchor" href="#api-1"><span class="octicon octicon-link"></span></a>API</h4>
+
+<blockquote>
+<p>on({event name}, {callback})</p>
+</blockquote>
+
+<p>Register an event (see Getting Started / Sender / API / Events)</p>
+
+<blockquote>
+<p>sendMessage({message})</p>
+</blockquote>
+
+<p>Send a message to the receiver app</p>
+
+<blockquote>
+<p>getSenders()</p>
+</blockquote>
+
+<p>Get list of senders</p>
+
+<blockquote>
+<p>disconnect()</p>
+</blockquote>
+
+<p>Close the app</p>
+
+<h4>
+<a name="events-1" class="anchor" href="#events-1"><span class="octicon octicon-link"></span></a>Events</h4>
+
+<ul>
+<li>message</li>
+<li>ready</li>
+<li>senderconnected</li>
+<li>senderdisconnected</li>
+<li>systemvolumechanged</li>
+</ul><h2>
+<a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<h3>
+<a name="getting-sources" class="anchor" href="#getting-sources"><span class="octicon octicon-link"></span></a>Getting sources</h3>
+
+<p>This is how to launch the app quickly in dev mode:</p>
+
+<blockquote>
+<ul>
+<li>clone the git repository:</li>
+</ul>
+<div class="highlight highlight-bash"><pre>git clone https://github.com/marcbuils/chromecastjs.git
+</pre></div>
+
+<ul>
+<li>Run in chromecastjs folder:</li>
+</ul>
+<div class="highlight highlight-bash"><pre><span class="c"># Dependencies</span>
+npm install<span class="p">;</span> bower install
+<span class="c"># Start watcher for development</span>
+grunt start
+</pre></div>
+</blockquote>
+
+<h3>
+<a name="sending-pull-request" class="anchor" href="#sending-pull-request"><span class="octicon octicon-link"></span></a>Sending pull request</h3>
+
+<p>This is how to send a pull request:</p>
+
+<ul>
+<li>Fork the project on your github account</li>
+<li>Clone the project on local (see Development/Getting sources)</li>
+<li>Add feature / bugfixed</li>
+<li>Start test 
+&gt; * Run in chromecastjs folder:
+&gt;
+&gt; <code>bash
+&gt; grunt test
+&gt;</code>
+</li>
+<li>Commit and create a pull request with description of your modification</li>
+</ul><p>(: THANKS FOR YOUR PARTICIPATION :)</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/marcbuils/chromecastjs/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/marcbuils/chromecastjs/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/marcbuils/chromecastjs"></a> is maintained by <a href="https://github.com/marcbuils">marcbuils</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-15699626-22");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
