@@ -44,13 +44,14 @@ input {
 <script type="text/javascript" src="../chromecast.js"></script>
 <script type="text/javascript">
   var chromecastSender = chromecast.createSender({
-    applicationID: 'XXXXXXXX',
+    applicationID: 'FC9DCDC8',
     namespace: 'urn:x-cast:com.google.cast.sample.helloworld'
   });
   
-  chromecastSender.on('error', function (err) {
+  chromecastSender
+    .on('error', function (err) {
       console.error(err);
-  });
+    });
 
   function update() {
     chromecastSender.sendMessage(document.getElementById('input').value);

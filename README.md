@@ -190,7 +190,7 @@ This is how to launch the app quickly in dev mode:
 
 > * clone the git repository:
 > ```bash
-> git clone ...
+> git clone https://github.com/marcbuils/chromecastjs.git
 > ```
 >
 > * Run in chromecastjs folder:

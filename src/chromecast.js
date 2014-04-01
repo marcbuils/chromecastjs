@@ -6,7 +6,7 @@
     } else {
         root.chromecast = factory();
     }
-}(this, function () {
+}(window, function () {
     'use strict';
     
     var utils, Common, Sender = {}, Receiver = {};
@@ -94,21 +94,19 @@
             if (!this._isAvailable()) {
                 return this;
             }
+            this._session.sendMessage(options.namespace, message, utils.bind(this._success, this), utils.bind(this._error, this));
             
-            if (this._session !== null) {
-                this._session.sendMessage(options.namespace, message, utils.bind(this._success(message, this)), utils.bind(this._error, this));
-            } else {
-                chrome.cast.requestSession(utils.bind(function (e) {
-                    this._session = e;
-                    this._session.addUpdateListener(utils.bind(this._sessionUpdateListener, this));
-                    this._session.addMessageListener(options.namespace, utils.bind(this._receiverMessage, this));
-                    this._session.sendMessage(
-                        options.namespace,
-                        options.message,
-                        utils.bind(this._success(message, this)),
-                        utils.bind(this._error, this));
-                }, this), utils.bind(this._error, this));
-            }
+            return this;
+        },
+        
+        start: function () {
+            var options = this.options();
+            
+            chrome.cast.requestSession(utils.bind(function (e) {
+                this._session = e;
+                this._session.addUpdateListener(utils.bind(this._sessionUpdateListener, this));
+                this._session.addMessageListener(options.namespace, utils.bind(this._receiverMessage, this));
+            }, this), utils.bind(this._error, this));
             
             return this;
         },
@@ -147,7 +145,7 @@
         
 
         _initSuccess: function () {
-            this._trigger('initsuccess');
+            this._trigger('initialized');
         },
 
         _error: function (message) {
@@ -232,7 +230,7 @@
         
         _ready: function (event) {
             this._trigger('ready', event);
-            this.castReceiverManager.setApplicationState('ready');
+            this._castReceiverManager.setApplicationState('ready');
         },
         
         _senderConnected: function (event) {
@@ -255,9 +253,11 @@
 
     return {
         createSender: function (options) {
+            require('../bower_components/cast_sender/index');
             return utils.create(Sender).initialize(options);
         },
         createReceiver: function (options) {
+            require('../bower_components/cast_receiver/index');
             return utils.create(Receiver).initialize(options);
         }
     };

@@ -76,8 +76,16 @@ module.exports = function (grunt) {
         uglify: {
             dist: {
               files: {
-                'chromecast.js': ['bower_components/cast_receiver/index.js', 'bower_components/cast_sender/index.js', 'src/chromecast.js']
+                'chromecast.js': ['chromecast-bundle.js']
               }
+            }
+        },
+        
+        browserify: {
+            dist: {
+                files: {
+                    'chromecast-bundle.js': ['src/chromecast.js']
+                }
             }
         }
     });
@@ -132,6 +140,6 @@ module.exports = function (grunt) {
         'docco:docs', 'portscanner', 'connect:dev', 'open:docs', 'open:dev', 'watch'
     ]);
     grunt.registerTask('compile', [
-        'uglify:dist'
+         'browserify:dist', 'uglify:dist'
     ]);
 };
