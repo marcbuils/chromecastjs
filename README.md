@@ -58,12 +58,17 @@ A Chromecast app is composed by
 	</tr>
   </table>	
 
-<script type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+<script type="text/javascript" src="chromecast.js"></script>
 <script type="text/javascript">
   var chromecastSender = chromecast.createSender({
     applicationID: 'XXXXXXXX',
     namespace: 'urn:x-cast:com.google.cast.sample.helloworld'
   });
+  
+  chromecastSender
+    .on('error', function (err) {
+      console.error(err);
+    });
 
   function update() {
     chromecastSender.sendMessage(document.getElementById('input').value);
@@ -89,7 +94,7 @@ A Chromecast app is composed by
   </head>
   <body>
 	<div id="message">Talk to me</div>
-    <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+    <script type="text/javascript" src="chromecast.js"></script>
     <script type="text/javascript">
       var chromecastReceiver = null;
     
@@ -98,9 +103,8 @@ A Chromecast app is composed by
             namespace: 'urn:x-cast:com.google.cast.sample.helloworld'
           });
           
-          chromecastReceiver.on('message', function (text) {
-             console.log(text);
-             document.getElementById('message').innerHTML=text;
+          chromecastReceiver.on('message', function (infos) {
+             document.getElementById('message').innerHTML=infos.data;
              this.setApplicationState(text);
           });
       };
