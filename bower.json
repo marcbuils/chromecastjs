@@ -29,6 +29,7 @@
     "tests"
   ],
   "devDependencies": {
-    "cast_sender": "http://www.gstatic.com/cv/js/sender/v1/cast_sender.js"
+    "cast_sender": "http://www.gstatic.com/cv/js/sender/v1/cast_sender.js",
+    "cast_receiver": "http://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"
   }
 }
