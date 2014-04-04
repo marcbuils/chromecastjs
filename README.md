@@ -64,6 +64,11 @@ A Chromecast app is composed by
     applicationID: 'XXXXXXXX',
     namespace: 'urn:x-cast:com.google.cast.sample.helloworld'
   });
+  
+  chromecastSender
+    .on('error', function (err) {
+      console.error(err);
+    });
 
   function update() {
     chromecastSender.sendMessage(document.getElementById('input').value);
@@ -98,9 +103,8 @@ A Chromecast app is composed by
             namespace: 'urn:x-cast:com.google.cast.sample.helloworld'
           });
           
-          chromecastReceiver.on('message', function (text) {
-             console.log(text);
-             document.getElementById('message').innerHTML=text;
+          chromecastReceiver.on('message', function (infos) {
+             document.getElementById('message').innerHTML=infos.data;
              this.setApplicationState(text);
           });
       };
