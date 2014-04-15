@@ -92,7 +92,7 @@ A Chromecast app is composed by
   <head>
     <title>Cast Hello Text</title>
   </head>
-  <body>
+  <body style="color: white; font-size: 10em">
 	<div id="message">Talk to me</div>
     <script type="text/javascript" src="chromecast.js"></script>
     <script type="text/javascript">
