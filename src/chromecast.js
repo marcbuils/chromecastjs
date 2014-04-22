@@ -215,8 +215,8 @@
             cast.receiver.logger.setLevelValue(0);
             castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
             castReceiverManager.onReady = utils.bind(this._ready, this);
-            castReceiverManager.onSenderConnected = utils.bind(this._renderConnected, this);
-            castReceiverManager.onSenderDisconnected = utils.bind(this._renderDisconnected, this);
+            castReceiverManager.onSenderConnected = utils.bind(this._senderConnected, this);
+            castReceiverManager.onSenderDisconnected = utils.bind(this._senderDisconnected, this);
             castReceiverManager.onSystemVolumeChanged = utils.bind(this._systemVolumeChanged, this);
             
             messageBus = castReceiverManager.getCastMessageBus(options.namespace);
