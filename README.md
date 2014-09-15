@@ -105,7 +105,6 @@ A Chromecast app is composed by
           
           chromecastReceiver.on('message', function (infos) {
              document.getElementById('message').innerHTML=infos.data;
-             this.setApplicationState(text);
           });
       };
     </script>
