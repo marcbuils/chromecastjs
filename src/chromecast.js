@@ -25,7 +25,9 @@
             for (i = 1; i < arguments.length; i++) {
                 origin = arguments[i];
                 for (attr in origin) {
-                    target[attr] = origin[attr];
+                    if (origin.hasOwnProperty(attr)) {
+                        target[attr] = origin[attr];
+                    }
                 }
             }
         },
