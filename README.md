@@ -212,11 +212,13 @@ This is how to send a pull request:
 - Clone the project on local (see Development/Getting sources)
 - Add feature / bugfixed
 - Start test 
+
 > * Run in chromecastjs folder:
 >
 > ```bash
 > grunt test
 > ```
+
 - Commit and create a pull request with description of your modification
 
 (: THANKS FOR YOUR PARTICIPATION :)
