@@ -142,14 +142,14 @@ Send a message to the receiver app
 
 #### Events
 
-> message
-> session
-> initSuccess
-> error
-> success
-> stopappsuccess
-> sessionupdatelistener
-> listener
+- message
+- session
+- initSuccess
+- error
+- success
+- stopappsuccess
+- sessionupdatelistener
+- listener
 
 
 ### Receiver
